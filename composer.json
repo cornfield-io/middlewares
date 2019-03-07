@@ -1,0 +1,52 @@
+{
+  "name": "cornfield-io/middlewares",
+  "description": "PSR-15: HTTP Server Request Handlers implementation.",
+  "type": "library",
+  "license": "MIT",
+  "minimum-stability": "stable",
+  "config": {
+    "preferred-install": {
+      "*": "dist"
+    },
+    "sort-packages": true,
+    "optimize-autoloader": true
+  },
+  "autoload": {
+    "psr-4": {
+      "Cornfield\\Middlewares\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Cornfield\\Middlewares\\Tests\\": "tests/"
+    }
+  },
+  "require": {
+    "php": ">=7.2",
+    "psr/http-server-handler": "^1.0",
+    "psr/http-server-middleware": "^1.0"
+  },
+  "require-dev": {
+    "friendsofphp/php-cs-fixer": "^2.14",
+    "phpstan/phpstan": "^0.11.2",
+    "phpunit/phpunit": "8",
+    "roave/security-advisories": "dev-master",
+    "vimeo/psalm": "^3.1"
+  },
+  "scripts": {
+    "dev": [
+      "@fix-style",
+      "@quality",
+      "@test"
+    ],
+    "fix-style": [
+      "php-cs-fixer fix src --rules=@PSR1,@PSR2,@Symfony",
+      "php-cs-fixer fix tests --rules=@PSR1,@PSR2,@Symfony"
+    ],
+    "test": "phpunit",
+    "quality": [
+      "psalm",
+      "phpstan analyse --level max src"
+    ]
+  }
+}

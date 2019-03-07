@@ -1,0 +1,37 @@
+dist: trusty
+language: php
+
+php:
+  - 7.2
+  - 7.3
+
+sudo: false
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+matrix:
+  include:
+    - php: 7.2
+      env: 'COMPOSER_FLAGS="--prefer-stable --prefer-lowest"'
+
+before_script:
+  - travis_retry composer update ${COMPOSER_FLAGS} --no-interaction --prefer-dist
+
+script:
+  - composer fix-style
+  - composer quality
+  - vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
+
+after_success:
+  - wget https://scrutinizer-ci.com/ocular.phar
+  - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
+  - wget https://raw.githubusercontent.com/DiscordHooks/travis-ci-discord-webhook/master/send.sh
+  - chmod +x send.sh
+  - ./send.sh success $WEBHOOK_URL
+
+after_failure:
+  - wget https://raw.githubusercontent.com/DiscordHooks/travis-ci-discord-webhook/master/send.sh
+  - chmod +x send.sh
+  - ./send.sh failure $WEBHOOK_URL_FAILED
