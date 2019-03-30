@@ -29,6 +29,7 @@
   "require-dev": {
     "friendsofphp/php-cs-fixer": "^2.14",
     "phpstan/phpstan": "^0.11.2",
+    "phpstan/phpstan-strict-rules": "^0.11.0",
     "phpunit/phpunit": "8",
     "roave/security-advisories": "dev-master",
     "vimeo/psalm": "^3.1"
