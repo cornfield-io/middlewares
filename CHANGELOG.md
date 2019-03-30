@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [2.0.0] - 2019-03-30
 
 ### Added
+- Support ContainerInterface
+- Add psr/container
 - Add phpstan/phpstan-strict-rules
 
 ## [1.0.2] - 2019-03-30
