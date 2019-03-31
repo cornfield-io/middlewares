@@ -36,6 +36,14 @@ final class Middlewares implements RequestHandlerInterface
     }
 
     /**
+     * @param ContainerInterface|null $container
+     */
+    public function setContainer(?ContainerInterface $container): void
+    {
+        $this->container = $container;
+    }
+
+    /**
      * Prepend one or more MiddlewareInterface to the beginning of the Middlewares' array.
      *
      * @param string|string[]|MiddlewareInterface|MiddlewareInterface[] $middlewares

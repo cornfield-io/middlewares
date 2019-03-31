@@ -54,6 +54,23 @@ final class MiddlewaresTest extends TestCase implements MiddlewareInterface
     }
 
     /**
+     * @throws ReflectionException
+     * @throws RuntimeException
+     */
+    public function testMiddlewaresSetContainer(): void
+    {
+        $handler = new Middlewares();
+        $handler->setContainer($this->container);
+        $handler->push([$this->getMockMiddlewareTextBefore('1'), $this->getMockMiddlewareTextBefore('2')]);
+        $handler->push($this->getMockMiddlewareTextBefore('3'));
+        $handler->unshift($this->getMockMiddlewareTextAfter('A'));
+        $handler->unshift([$this->getMockMiddlewareTextAfter('C'), $this->getMockMiddlewareTextAfter('B')]);
+        $handler->push('MiddlewaresTest');
+
+        $this->assertSame('123Hello, world!ABC', $handler->handle($this->request)->getBody()->getContents());
+    }
+
+    /**
      * @throws RuntimeException
      * @throws ReflectionException
      */

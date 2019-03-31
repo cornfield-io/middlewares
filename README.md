@@ -22,7 +22,9 @@ $ composer require cornfield-io/middlewares
 
 * An implementation of PSR-7 (we recommend the [Zend Diactoros project](https://github.com/zendframework/zend-diactoros/)).
 
-Throughout this documentation, we will assume that you are using the packages above. If you want, you can still install other implementations of [PSR-7](https://packagist.org/providers/psr/http-message-implementation).
+* Optionally, you could also install a [PSR-11](https://www.php-fig.org/psr/psr-11/) dependency injection container (we recommend the [PHP-DI project](http://php-di.org/)).
+
+Throughout this documentation, we will assume that you are using the packages above. If you want, you can still install other implementations of [PSR-7](https://packagist.org/providers/psr/http-message-implementation) or [PSR-11](https://packagist.org/providers/psr/container-implementation).
 
 ## Usage
 
@@ -37,14 +39,33 @@ use Zend\Diactoros\ServerRequestFactory;
 $middlewares = new Middlewares();
 $request = ServerRequestFactory::fromGlobals($_SERVER, $_GET, $_POST, $_COOKIE, $_FILES);
 
-// Prepend one or more MiddlewareInterface
-$middlewares->unshift(...);
+// Prepend one or more middlewares
+$middlewares->unshift('Middleware1');
+$middlewares->unshift([Middleware2, 'Middleware3']);
 
-// Push one or more MiddlewareInterface
-$middlewares->push(...);
+// Push one or more middlewares
+$middlewares->push(Middleware4);
+$middlewares->push(['Middleware5', Middleware6]);
 
 // Process the request
 $response = $middlewares->handle($request);
+```
+
+### ContainerInterface
+
+`Cornfield\Middlewares` supports `Psr\Container\ContainerInterface`
+
+```php
+<?php
+
+use Cornfield\Middlewares\Middlewares;
+
+$middlewares = new Middlewares(/* ContainerInterface */);
+
+// Or
+
+$middlewares->setContainer(/* ContainerInterface */);
+
 ```
 
 ## Change log
